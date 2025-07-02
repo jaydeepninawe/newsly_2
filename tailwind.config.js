@@ -6,7 +6,11 @@ module.exports = {
     "./components/**/*.{js,jsx,ts,tsx}" // ✅ Add this if not present
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+      
+    },
+  },
   },
   plugins: [],
 }

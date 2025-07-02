@@ -1,137 +1,176 @@
+import React, { useState } from "react";
+
 export default function MainNewsSection() {
-  const leftNews = [
+  const [activeTab, setActiveTab] = useState("Latest");
+
+  const leftStories = [
     {
-      category: "Lifestyle",
-      date: "June 7, 2022",
-      title: "Worrying Sign In Covid Numbers",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
+      category: "Entertainment",
+      time: "6 years ago",
+      title: "The final 6 Game of Thrones’ episodes might feel like a full season",
     },
     {
-      category: "Fashion",
-      date: "June 7, 2022",
-      title: "Seven Star’s Gravity-Defying Dress Stuns",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
+      category: "Entertainment",
+      time: "6 years ago",
+      title: "‘Girls Trip’ already surpasses ‘Rough Night’ in opening weekend",
     },
     {
-      category: "Finance",
-      date: "June 7, 2022",
-      title: "‘Not OK’: Cotton On Called Out Over Product",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
+      category: "Entertainment",
+      time: "6 years ago",
+      title: "New Season 8 Walking Dead trailer dashes forward in time",
     },
+    {
+      category: "Entertainment",
+      time: "6 years ago",
+      title: "The final 6 Game of Thrones’ episodes might feel like a full season",
+    },
+    {
+      category: "Entertainment",
+      time: "6 years ago",
+      title: "‘Girls Trip’ already surpasses ‘Rough Night’ in opening weekend",
+    },
+    
   ];
 
-  const rightNews = [
-    {
-      category: "Fashion",
-      date: "June 7, 2022",
-      title: "Confusing $16 dental floss swimsuit roasted",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
-    },
-    {
-      category: "Lifestyle",
-      date: "June 7, 2022",
-      title: "Five Signs of a Highly Intelligent Person",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
-    },
-    {
-      category: "Technology",
-      date: "June 7, 2022",
-      title: "Latin America’s Moonshot",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
-    },
-    {
-      category: "Business",
-      date: "June 7, 2022",
-      title: "Your Empty Office Turn Into Apartments?",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
-    },
-    {
-      category: "Media",
-      date: "June 7, 2022",
-      title: "The New Mortal Kombat Movie Rules",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
-    },
-    {
-      category: "Politics",
-      date: "June 7, 2022",
-      title: "Corporations Are People, Too",
-      img: "https://images.unsplash.com/photo-1610088441520-4352457e7095",
-    },
-  ];
+  const rightTabs = {
+    Latest: [
+      "Mobile Google CEO Promises 11 Daydream-compatible phones",
+      "Hulu hires Google marketing veteran Kelly Campbell as CMO",
+      "Ford’s 2018 Mustang GT can do 0-to-60 mph in under 4 seconds",
+      "NASA seeks to build a quieter supersonic plane for passenger flight",
+      "Microsoft Paint is finally dead, and the world is a better place",
+      "Netflix was the top grossing app in Q2, with mobile revenue up 233%",
+      "5 Mayors agree, Congress should invest in affordable housing",
+      "Ford’s 2018 Mustang GT can do 0-to-60 mph in under 4 seconds",
+      
+     
+    ],
+    Videos: [
+      "Watch NASA test their new space engine",
+      "Top 10 fastest electric cars in 2024",
+      "Inside the making of Dune's sound design",
+    ],
+    Galleries: [
+      "30 breathtaking aerial photos of Earth",
+      "The best red carpet looks of 2024",
+      "Before & After: Renovated tiny homes",
+    ],
+  };
 
   return (
-    <section className="max-w-screen-xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-      {/* Left Column */}
-      <div className="md:col-span-1 space-y-4">
-        <h2 className="font-extrabold uppercase border-b pb-2 border-black text-lg">
-          What's Happening
-        </h2>
-        {leftNews.map((news, index) => (
-          <div key={index}>
-            <img
-              src={news.img}
-              alt={news.title}
-              className="w-full aspect-square object-cover rounded mb-2"
-            />
-            <p className="text-sm text-gray-500">
-              <span className="font-semibold text-black">{news.category}</span> {news.date}
-            </p>
-            <h3 className="font-bold">{news.title}</h3>
-          </div>
-        ))}
-      </div>
+    <section className="max-w-screen-xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-6">
+      {/* Left Column - Trending */}
+      <div className="md:col-span-1 flex flex-col gap-5">
+        <span className="bg-pink-600 text-white text-xs font-bold px-3 py-1 uppercase w-max rounded">
+          Trending
+        </span>
 
-      {/* Center Main Article */}
-      <div className="md:col-span-2">
-        <p className="text-sm text-gray-600">
-          <span className="font-semibold text-black">Politics</span> June 7, 2022
-        </p>
-        <h1 className="text-3xl font-extrabold mb-2 leading-snug">
-          5 Takeaways From The First Round Of France’s Election
-        </h1>
-        <p className="text-gray-600 mb-4">
-          The first-round results are trickier than they look for Macron.
-        </p>
-        <img
-          src="https://images.unsplash.com/photo-1610088441520-4352457e7095"
-          alt="Main article"
-          className="w-full h-auto object-cover rounded"
-        />
-      </div>
-
-      {/* Right Column */}
-      <div className="md:col-span-1 space-y-4">
-        <h2 className="font-extrabold uppercase border-b pb-2 border-black text-lg">Just In</h2>
-
-        {/* First highlighted item */}
-        <div>
-          <img
-            src={rightNews[0].img}
-            alt={rightNews[0].title}
-            className="w-full h-auto mb-2 rounded"
-          />
-          <p className="text-sm text-gray-500">
-            <span className="font-semibold text-pink-600">{rightNews[0].category}</span> {rightNews[0].date}
-          </p>
-          <h3 className="font-bold">{rightNews[0].title}</h3>
-        </div>
-
-        {/* Remaining items */}
-        {rightNews.slice(1).map((item, index) => (
-          <div key={index} className="flex items-start gap-3">
-            <img
-              src={item.img}
-              alt={item.title}
-              className="w-16 h-16 object-cover flex-shrink-0 rounded"
-            />
+        {leftStories.map((story, i) => (
+          <div key={i} className="flex gap-3">
+            <div className="relative w-24 h-16 flex-shrink-0">
+              <img
+                src={`https://source.unsplash.com/random/100x80?sig=${i}`}
+                alt="thumb"
+                className="w-full h-full object-cover rounded"
+              />
+              <div className="absolute top-0 left-0 w-6 h-6 bg-green-500 text-white text-xs flex items-center justify-center rounded-full">
+                ▶
+              </div>
+            </div>
             <div>
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold text-black">{item.category}</span> {item.date}
+              <p className="text-[10px] uppercase text-gray-500 font-semibold">
+                {story.category} / {story.time}
               </p>
-              <h4 className="font-semibold text-sm">{item.title}</h4>
+              <p className="text-sm font-bold leading-tight">{story.title}</p>
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Center Column - Main Stories */}
+      <div className="md:col-span-2 flex flex-col gap-6">
+        {/* Main Feature */}
+        <div className="relative h-64 rounded overflow-hidden shadow-lg group">
+          <img
+            src="https://source.unsplash.com/random/800x500?news"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            alt="Main"
+          />
+          <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 via-black/40 to-transparent text-white">
+            <p className="text-xs uppercase font-bold mb-1">Politics / 6 years ago</p>
+            <h2 className="text-2xl font-extrabold leading-tight">
+              Illinois’ Financial Crisis Fallout
+            </h2>
+            <p className="text-sm mt-1">
+              At vero eos et accusamus et iusto odio dignissimos ducimus qui
+              blanditiis praesentium voluptatum deleniti.
+            </p>
+          </div>
+        </div>
+
+        {/* Sub Stories */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {[1, 2].map((num) => (
+            <div
+              key={num}
+              className="relative h-52 rounded overflow-hidden shadow-md group"
+            >
+              <img
+                src={`https://source.unsplash.com/random/400x300?sig=${num}`}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                alt="sub-article"
+              />
+              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 via-transparent text-white">
+                <p className="text-xs uppercase font-bold mb-1">
+                  {num === 1 ? "Fashion" : "Entertainment"} / 6 years ago
+                </p>
+                <h3 className="text-lg font-bold leading-tight">
+                  {num === 1
+                    ? "These ’90s fashion trends are making a comeback"
+                    : "‘Better Call Saul’ has been renewed for a fourth season"}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Right Sidebar */}
+      <div className="md:col-span-1">
+        {/* Tabs */}
+        <div className="flex gap-3 text-xs font-bold uppercase border-b border-gray-300 pb-2 mb-3">
+          {["Latest", "Videos", "Galleries"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`${
+                activeTab === tab
+                  ? "text-pink-600 border-b-2 border-pink-600"
+                  : "text-gray-500"
+              } pb-1`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        <ul className="space-y-3 text-sm">
+          {rightTabs[activeTab].map((title, i) => (
+            <li key={i} className="hover:underline font-medium text-gray-800">
+              {title}
+            </li>
+          ))}
+        </ul>
+
+        {/* Ad */}
+        <div className="mt-8">
+          <img
+            src="https://via.placeholder.com/300x250?text=Advertisement"
+            alt="ad"
+            className="w-full rounded"
+          />
+        </div>
       </div>
     </section>
   );

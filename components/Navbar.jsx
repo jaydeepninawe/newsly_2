@@ -26,21 +26,22 @@ export default function Navbar() {
           </div>
         </div>
 
+        
         {/* Bottom White Nav */}
-        <nav className="bg-white shadow py-3">
-          <div className="flex justify-center">
-            <ul className="flex flex-wrap justify-center items-center  text-5xl h-8 gap-10 font-semibold  sm:text-base uppercase">
-              <li className="cursor-pointer">Home</li>
-              <li className="cursor-pointer">Features</li>
-              <li className="cursor-pointer">Buy Theme</li>
-              <li className="cursor-pointer">Entertainment</li>
-              <li className="cursor-pointer">Politics</li>
-              <li className="cursor-pointer">Fashion</li>
-              <li className="cursor-pointer">Technology</li>
-              <li className="cursor-pointer">Business</li>
-            </ul>
-          </div>
-        </nav>
+<nav className="bg-white shadow py-3 hidden sm:block">
+  <div className="overflow-x-auto whitespace-nowrap px-4">
+    <ul className="flex gap-6 sm:gap-8 md:gap-10 text-sm sm:text-base md:text-lg font-semibold uppercase justify-center">
+      <li className="cursor-pointer">Home</li>
+      <li className="cursor-pointer">Features</li>
+      <li className="cursor-pointer">Buy Theme</li>
+      <li className="cursor-pointer">Entertainment</li>
+      <li className="cursor-pointer">Politics</li>
+      <li className="cursor-pointer">Fashion</li>
+      <li className="cursor-pointer">Technology</li>
+      <li className="cursor-pointer">Business</li>
+    </ul>
+  </div>
+</nav>
       </header>
 
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
