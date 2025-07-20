@@ -1,64 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; // useNavigate for programmatic navigation
+const API_URL = import.meta.env.VITE_API_URL;
 
-// Sample data
-const news = [
-  {
-    id: 1,
-    title: "Meet Superman's grandfather in new trailer for Krypton",
-    category: "ENTERTAINMENT",
-    time: "2 hours ago",
-    image: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80",
-    description: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.",
-    isVideo: true,
-  },
-  {
-    id: 2,
-    title: "Poll: Virginia governor's race in dead heat",
-    category: "POLITICS",
-    time: "4 hours ago",
-    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
-    description: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem.",
-    isVideo: false,
-  },
-  {
-    id: 3,
-    title: "Federer makes history with eighth Wimbledon, 19th major title",
-    category: "SPORTS",
-    time: "3 hours ago",
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
-    description: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem.",
-    isVideo: true,
-  },
-  {
-    id: 4,
-    title: "Disney's live-action Aladdin finally finds its stars",
-    category: "ENTERTAINMENT",
-    time: "5 hours ago",
-    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
-    description: "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et.",
-    isVideo: true,
-  },
-  {
-    id: 3,
-    title: "Federer makes history with eighth Wimbledon, 19th major title",
-    category: "SPORTS",
-    time: "3 hours ago",
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
-    description: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem.",
-    isVideo: true,
-  },
-  {
-    id: 4,
-    title: "Disney's live-action Aladdin finally finds its stars",
-    category: "ENTERTAINMENT",
-    time: "5 hours ago",
-    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
-    description: "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et.",
-    isVideo: true,
-  },
-];
-
-// Play icon SVG
+// Play icon component
 const PlayIcon = ({ color = "#10b981" }) => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
     <circle cx="16" cy="16" r="16" fill={color} />
@@ -67,38 +12,80 @@ const PlayIcon = ({ color = "#10b981" }) => (
 );
 
 export default function VerticalNewsList() {
+  const navigate = useNavigate();
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    const fetchVerticalArticles = async () => {
+      try {
+        const res = await axios.get(
+          `${API_URL}/section/vertical`
+        );
+        setArticles(res.data);
+      } catch (error) {
+        console.error("Error fetching vertical articles:", error);
+      }
+    };
+
+    fetchVerticalArticles();
+  }, []);
+
+  const renderSkeletons = () => {
+    return Array.from({ length: 4 }).map((_, idx) => (
+      <div
+        key={idx}
+        className={`flex items-start gap-4 pb-4 ${
+          idx < 3 ? "border-b border-gray-200 mb-4" : ""
+        } animate-pulse`}
+      >
+        <div className="relative min-w-[120px] w-[120px] h-[80px] bg-gray-300 rounded"></div>
+        <div className="flex-1 space-y-2">
+          <div className="h-3 w-1/3 bg-gray-300 rounded"></div>
+          <div className="h-4 w-3/4 bg-gray-400 rounded"></div>
+          <div className="h-3 w-full bg-gray-300 rounded"></div>
+        </div>
+      </div>
+    ));
+  };
+
   return (
     <div className="max-w-2xl mx-auto bg-white rounded-lg shadow p-4 mt-8">
-      {news.map((item, idx) => (
-        <div
-          key={item.id}
-          className={`flex items-start gap-4 pb-4 ${idx < news.length - 1 ? "border-b border-gray-200 mb-4" : ""}`}
-        >
-          <div className="relative min-w-[120px] w-[120px] h-[80px] rounded overflow-hidden">
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-full object-cover rounded"
-            />
-            {item.isVideo && (
-              <span className="absolute top-2 left-2">
-                <PlayIcon />
-              </span>
-            )}
-          </div>
-          <div className="flex-1">
-            <div className="text-xs uppercase text-gray-500 font-semibold mb-1">
-              {item.category} <span className="mx-1">/</span> {item.time}
+      {articles.length > 0
+        ? articles.map((item, idx) => (
+            <div
+              key={item._id}
+              onClick={() => navigate(`/articles/${item.slug}`)}
+              className={`flex items-start gap-4 pb-4 cursor-pointer hover:bg-gray-50 transition rounded px-2 ${
+                idx < articles.length - 1 ? "border-b border-gray-200 mb-4" : ""
+              }`}
+            >
+              <div className="relative min-w-[120px] w-[120px] h-[80px] rounded overflow-hidden">
+                <img
+                  src={item.imageUrl}
+                  alt={item.title}
+                  className="w-full h-full object-cover rounded"
+                />
+                {item.isVideo && (
+                  <span className="absolute top-2 left-2">
+                    <PlayIcon />
+                  </span>
+                )}
+              </div>
+              <div className="flex-1">
+                <div className="text-xs uppercase text-gray-500 font-semibold mb-1">
+                  {item.category || "News"} <span className="mx-1">/</span>{" "}
+                  {new Date(item.publishedAt).toDateString()}
+                </div>
+                <div className="font-bold text-lg leading-snug mb-1">
+                  {item.title}
+                </div>
+                <div className="text-gray-600 text-sm">
+                  {item.excerpt || "No description available."}
+                </div>
+              </div>
             </div>
-            <div className="font-bold text-lg leading-snug mb-1">
-              {item.title}
-            </div>
-            <div className="text-gray-600 text-sm">
-              {item.description}
-            </div>
-          </div>
-        </div>
-      ))}
+          ))
+        : renderSkeletons()}
     </div>
   );
 }

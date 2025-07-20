@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { FiX } from "react-icons/fi";
 import {
   FaFacebookF,
@@ -7,40 +10,34 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 
-const articles = [
-  {
-    category: "Lifestyle",
-    date: "June 7, 2022",
-    title: "In France, its Macron vs Le Pen again for presidency",
-    img: "https://via.placeholder.com/100x70?text=1",
-  },
-  {
-    category: "Business",
-    date: "June 7, 2022",
-    title: "Your Empty Office Turn Into Apartments?",
-    img: "https://via.placeholder.com/100x70?text=2",
-  },
-  {
-    category: "Recipe",
-    date: "June 7, 2022",
-    title: "Sweet and festive lemon desserts for Easter",
-    img: "https://via.placeholder.com/100x70?text=3",
-  },
-  {
-    category: "Politics",
-    date: "June 7, 2022",
-    title: "What Michelle Obama told Viola Davis ahead of ‘The First Lady’",
-    img: "https://via.placeholder.com/100x70?text=4",
-  },
-  {
-    category: "Finance",
-    date: "June 7, 2022",
-    title: "PAWS Chicago’s Adopt-a-Thon is underway",
-    img: "https://via.placeholder.com/100x70?text=5",
-  },
-];
+const API_URL = import.meta.env.VITE_API_URL;
 
-export default function Sidebar({ isOpen, onClose }) {
+const Sidebar = ({ isOpen, onClose }) => {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}`) // Replace with your actual endpoint
+      .then((res) => {
+        setArticles(res.data || []);
+      })
+      .catch((err) => {
+        console.error("Error fetching articles:", err);
+        setArticles([]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const SkeletonCard = () => (
+    <div className="animate-pulse space-y-2 border-b border-gray-700 pb-4">
+      <div className="w-full h-32 bg-gray-700 rounded"></div>
+      <div className="h-4 bg-gray-600 rounded w-3/4"></div>
+      <div className="h-4 bg-gray-600 rounded w-5/6"></div>
+    </div>
+  );
+
   return (
     <div
       className={`fixed top-0 left-0 w-80 h-full bg-black text-white z-50 transform transition-transform duration-300 ${
@@ -55,15 +52,33 @@ export default function Sidebar({ isOpen, onClose }) {
 
       {/* Articles */}
       <div className="p-4 space-y-6 overflow-y-auto h-[calc(100%-130px)]">
-        {articles.map((item, index) => (
-          <div key={index} className="space-y-1 border-b border-gray-700 pb-4">
-            <img src={item.img} alt={item.title} className="w-full h-32 object-cover" />
-            <p className="text-sm text-gray-400">
-              <span className="font-semibold text-white">{item.category}</span> {item.date}
-            </p>
-            <h3 className="text-white font-bold text-md leading-snug">{item.title}</h3>
-          </div>
-        ))}
+        {loading ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : articles.length === 0 ? (
+          <p className="text-gray-500 text-center">No articles found.</p>
+        ) : (
+          articles.map((item, index) => (
+            <div
+              key={index}
+              className="space-y-1 border-b border-gray-700 pb-4 cursor-pointer hover:bg-gray-800 p-2 rounded transition"
+              onClick={() => navigate(`/articles/${item.slug}`)}
+            >
+              <img
+                src={item.imageUrl}
+                alt={item.title}
+                className="w-full h-32 object-cover rounded"
+              />
+              <p className="text-sm text-gray-400">
+                <span className="font-semibold text-white">{item.category}</span> {item.date}
+              </p>
+              <h3 className="text-white font-bold text-md leading-snug">{item.title}</h3>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Footer Socials */}
@@ -76,4 +91,6 @@ export default function Sidebar({ isOpen, onClose }) {
       </div>
     </div>
   );
-}
+};
+
+export default Sidebar;

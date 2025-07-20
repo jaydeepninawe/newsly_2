@@ -2,8 +2,10 @@ import { useState } from "react";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import { BsSun } from "react-icons/bs";
 import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom"; // ✅ Import navigate
 
 export default function Navbar() {
+   const navigate = useNavigate(); 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -17,7 +19,8 @@ export default function Navbar() {
               onClick={() => setIsSidebarOpen(true)}
             />
           </div>
-          <h1 className="text-4xl font-extrabold text-cyan-400 italic tracking-wide">
+          <h1 className="text-4xl font-extrabold text-cyan-400 italic tracking-wide cursor-pointer"
+           onClick={() => navigate(`/`)}>
             Newsly
           </h1>
           <div className="absolute right-6 flex items-center gap-5">
