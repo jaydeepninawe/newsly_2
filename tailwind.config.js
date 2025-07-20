@@ -26,6 +26,5 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/typography"), // ✅ Add typography plugin for `prose`
-  ],
+  ]
 };
