@@ -13,7 +13,7 @@ export default function Footer() {
     WORLD: ["U.N", "Conflicts", "Terrorism", "Disasters", "Global Economy", "Environment", "Religion"],
     POLITICS: ["Executive", "Senate", "House", "Judiciary", "Foreign Policy", "Polls", "Elections"],
     TV: ["Shows", "Personalities", "Watch Live", "Full Episodes", "Show Clips", "New Clips"],
-    OTHERS: ["Vibe Weather", "Vibe Nation", "Vibe News Shop", "Vibe News Go", "Vibe Ration", "Podcasts", "Apps & Products"],
+    // OTHERS: ["Vibe Weather", "Vibe Nation", "Vibe News Shop", "Vibe News Go", "Vibe Ration", "Podcasts", "Apps & Products"],
   };
 
   return (
@@ -35,7 +35,7 @@ export default function Footer() {
       <hr className="border-gray-700 mb-6" />
 
       {/* Middle: Footer Links */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-sm">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 text-sm">
         {Object.entries(footerLinks).map(([title, items]) => (
           <div key={title}>
             <h3 className="font-bold text-white mb-2">{title}</h3>
