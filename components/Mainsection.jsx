@@ -82,7 +82,7 @@ export default function MainNewsSection() {
                   {mainStory.publishedAt ? new Date(mainStory.publishedAt).toLocaleDateString() : "Unknown"}
                 </p>
                 <h2 className="text-2xl font-extrabold leading-tight">{mainStory.title}</h2>
-                <p className="text-sm mt-1">{mainStory.body?.slice(0, 100) || ""}...</p>
+                <p className="text-sm mt-1">{mainStory.excerpt?.slice(0, 100) || ""}...</p>
               </div>
             </Link>
           ) : (
